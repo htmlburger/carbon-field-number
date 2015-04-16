@@ -31,4 +31,11 @@ class Carbon_Field_Number extends Carbon_Field {
 
 		parent::save();
 	}
+
+	function admin_enqueue_scripts() {
+		$template_dir = get_template_directory_uri();
+
+		# Enqueue JS
+		crb_enqueue_script('carbon-field-FIELD_NAME', $template_dir . '/includes/carbon-field-number/js/field.js', array('carbon-fields'));
+	}
 }
