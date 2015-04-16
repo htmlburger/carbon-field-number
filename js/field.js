@@ -18,16 +18,16 @@ window.carbon = window.carbon || {};
 		checkInt: function(event) {
 			var $input = this.$('input[type="number"]');
 			var value = $input.val();
-			var intval = parseInt(value);
+			var intval = parseInt(value, 10);
 
 			if (!!value && !isNaN(intval) && intval != 0) {
-				value = Math.abs(value);
+				value = Math.abs(intval);
 			} else {
 				value = '';
 			}
 
-			this.model.set('value', value);
-			$input.val(value);
+			this.model.set('value', intval);
+			$input.val(intval);
 		},
 	});
 

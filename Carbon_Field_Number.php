@@ -36,6 +36,9 @@ class Carbon_Field_Number extends Carbon_Field {
 		$template_dir = get_template_directory_uri();
 
 		# Enqueue JS
-		crb_enqueue_script('carbon-field-FIELD_NAME', $template_dir . '/includes/carbon-field-number/js/field.js', array('carbon-fields'));
+		crb_enqueue_script('carbon-field-Number', $template_dir . '/includes/carbon-field-number/js/field.js', array('carbon-fields'));
+		
+		# Enqueue CSS
+		crb_enqueue_style('carbon-field-Number', $template_dir . '/includes/carbon-field-number/css/field.css');
 	}
 }
