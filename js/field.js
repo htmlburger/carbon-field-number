@@ -11,23 +11,59 @@ window.carbon = window.carbon || {};
 		// Add the events from the parent view and also include new ones
 		events: function() {
 			return _.extend({}, carbon.fields.View.prototype.events, {
-				'blur input[type="number"]': 'checkInt',
+				'blur input[type="number"]': 'checkValue',
 			});
 		},
-		
-		checkInt: function(event) {
+
+		initialize: function() {
+			carbon.fields.View.prototype.initialize.apply(this);
+
+			this.on('field:rendered', this.initNumberField);
+		},
+
+		initNumberField: function() {
+			var _this = this;
+			var model = this.model;
+			var min = model.get('min');
+			var max = model.get('max');
+			var truncate = model.get('truncate');
+
+			if ( truncate > 0 ) {
+				_this.$('input').attr('step', 'any');
+			};
+
+			_this.$('input').attr('min', min);
+			_this.$('input').attr('max', max);
+		},
+
+		truncateValue: function(number, truncate) {
+			truncate = truncate || 0;
+			truncate = Math.pow(10, truncate);
+			if ( number >= 0 ) {
+				return Math.floor(number * truncate) / truncate;
+			} else {
+				return Math.ceil(number * truncate) / truncate;
+			};
+		},
+
+		checkValue: function(event) {
 			var $input = this.$('input[type="number"]');
 			var value = $input.val();
-			var intval = parseInt(value, 10);
+			var min = this.model.get('min');
+			var max = this.model.get('max');
+			var truncate = this.model.get('truncate');
 
-			if (!!value && !isNaN(intval) && intval != 0) {
-				value = Math.abs(intval);
+			var floatval = parseFloat(value);
+			floatval = this.truncateValue(floatval, truncate);
+
+			if ( !isNaN(floatval) && min <= floatval && floatval <= max ) {
+				value = floatval;
 			} else {
 				value = '';
 			}
 
-			this.model.set('value', intval);
-			$input.val(intval);
+			this.model.set('value', value);
+			$input.val(value);
 		},
 	});
 

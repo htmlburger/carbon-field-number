@@ -6,10 +6,31 @@ class Carbon_Field_Number extends Carbon_Field {
 	 *
 	 * Prints the main Underscore template
 	 **/
+	
+	protected $default_min = 1;
+	protected $default_max = 2147483647;
+	protected $default_truncate = 0;
+
+	protected $min = 1;
+	protected $max = 2147483647;
+	protected $truncate = 0;
+
 	function template() {
 		?>
 		<input id="{{{ id }}}" type="number" name="{{{ name }}}" value="{{ value }}" class="regular-text" />
 		<?php
+	}
+
+	function to_json($load) {
+		$field_data = parent::to_json($load);
+
+		$field_data = array_merge($field_data, array(
+			'min' => is_numeric($this->min) ? $this->min : $this->default_min,
+			'max' => is_numeric($this->max) ? $this->max : $this->default_max,
+			'truncate' => is_int($this->truncate) ? $this->truncate : $this->default_truncate,
+		));
+
+		return $field_data;
 	}
 
 	function save() {
@@ -20,9 +41,14 @@ class Carbon_Field_Number extends Carbon_Field {
 		$this->set_name($name);
 
 		$field_value = '';
-		if ( !empty($value) ) {
-			$value = absint($value);
-			if ( !empty($value) ) {
+		if ( !empty($value) && is_numeric($value) ) {
+			$value = floatval($value);
+			$value = round($value, $this->truncate, PHP_ROUND_HALF_DOWN);
+
+			$is_valid_min = $this->min <= $value;
+			$is_valid_max = $value <= $this->max;
+
+			if ( !empty($value) && $is_valid_min && $is_valid_max ) {
 				$field_value = $value;
 			}
 		}
@@ -40,5 +66,20 @@ class Carbon_Field_Number extends Carbon_Field {
 		
 		# Enqueue CSS
 		crb_enqueue_style('carbon-field-Number', $template_dir . '/includes/carbon-field-number/css/field.css');
+	}
+
+	function set_max($max) {
+		$this->max = $max;
+		return $this;
+	}
+
+	function set_min($min) {
+		$this->min = $min;
+		return $this;
+	}
+
+	function set_truncate($truncate) {
+		$this->truncate = $truncate;
+		return $this;
 	}
 }
