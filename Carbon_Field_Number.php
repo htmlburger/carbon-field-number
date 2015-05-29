@@ -41,14 +41,14 @@ class Carbon_Field_Number extends Carbon_Field {
 		$this->set_name($name);
 
 		$field_value = '';
-		if ( !empty($value) && is_numeric($value) ) {
+		if ( isset($value) && $value !== '' && is_numeric($value) ) {
 			$value = floatval($value);
 			$value = round($value, $this->truncate, PHP_ROUND_HALF_DOWN);
 
 			$is_valid_min = $this->min <= $value;
 			$is_valid_max = $value <= $this->max;
 
-			if ( !empty($value) && $is_valid_min && $is_valid_max ) {
+			if ( $value !== '' && $is_valid_min && $is_valid_max ) {
 				$field_value = $value;
 			}
 		}

@@ -7,6 +7,25 @@ window.carbon = window.carbon || {};
 		return false;
 	}
 
+	carbon.fields.Model.Number = carbon.fields.Model.extend({
+		/*
+		 * The validate method is an internal Backbone method.
+		 * It will check if the field model data is valid.
+		 * Used to check required fields
+		 *
+		 * @see http://backbonejs.org/#Model-validate
+		 */
+		validate: function(attrs, options) {
+			var hasErrors = false;
+
+			if (attrs.value === '') {
+				hasErrors = true;
+			}
+
+			return hasErrors;
+		}
+	});
+
 	carbon.fields.View.Number = carbon.fields.View.extend({
 		// Add the events from the parent view and also include new ones
 		events: function() {
