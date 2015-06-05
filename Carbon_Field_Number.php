@@ -43,7 +43,7 @@ class Carbon_Field_Number extends Carbon_Field {
 		$field_value = '';
 		if ( isset($value) && $value !== '' && is_numeric($value) ) {
 			$value = floatval($value);
-			$value = round($value, $this->truncate, PHP_ROUND_HALF_DOWN);
+			$value = $this->truncate($value);
 
 			$is_valid_min = $this->min <= $value;
 			$is_valid_max = $value <= $this->max;
@@ -81,5 +81,17 @@ class Carbon_Field_Number extends Carbon_Field {
 	function set_truncate($truncate) {
 		$this->truncate = $truncate;
 		return $this;
+	}
+
+	// Helper Function, save on php 5.2
+	function truncate($number) {
+		$decimals = $this->truncate;
+
+		$power = pow(10, $decimals); 
+		if($number > 0){
+			return floor($number * $power) / $power; 
+		} else {
+			return ceil($number * $power) / $power; 
+		}
 	}
 }
