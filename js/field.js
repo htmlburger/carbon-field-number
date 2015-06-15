@@ -51,9 +51,12 @@ window.carbon = window.carbon || {};
 			if ( truncate > 0 ) {
 				if ( step == 1 ) {
 					_this.$('input').attr('step', 'any');
-				} else {
-					_this.$('input').attr('step', step);
 				};
+			};
+
+			console.log(step);
+			if ( step != 1 ) {
+				_this.$('input').attr('step', step);
 			};
 
 			_this.$('input').attr('min', min);
@@ -70,6 +73,16 @@ window.carbon = window.carbon || {};
 			};
 		},
 
+		stepValue: function(number, step, min, truncate) {
+			step = step || 1;
+			number = number-min;
+
+			var base = number/step;
+			base = this.truncateValue(base, truncate);
+
+			return (base * step) + min;
+		},
+
 		checkValue: function(event) {
 			var $input = this.$('input[type="number"]');
 			var value = $input.val();
@@ -80,8 +93,9 @@ window.carbon = window.carbon || {};
 
 			var floatval = parseFloat(value);
 			floatval = this.truncateValue(floatval, truncate);
+			floatval = this.stepValue(floatval, step, min, truncate);
 
-			if ( !isNaN(floatval) && min <= floatval && floatval <= max && floatval%step ==  ) {
+			if ( !isNaN(floatval) && min <= floatval && floatval <= max ) {
 				value = floatval;
 			} else {
 				value = '';
