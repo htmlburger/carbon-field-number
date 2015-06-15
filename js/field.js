@@ -54,7 +54,6 @@ window.carbon = window.carbon || {};
 				};
 			};
 
-			console.log(step);
 			if ( step != 1 ) {
 				_this.$('input').attr('step', step);
 			};
