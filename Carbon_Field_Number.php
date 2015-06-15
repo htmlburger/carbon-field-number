@@ -10,10 +10,12 @@ class Carbon_Field_Number extends Carbon_Field {
 	protected $default_min = 1;
 	protected $default_max = 2147483647;
 	protected $default_truncate = 0;
+	protected $default_step = 1;
 
 	protected $min = 1;
 	protected $max = 2147483647;
 	protected $truncate = 0;
+	protected $step = 1;
 
 	function template() {
 		?>
@@ -27,6 +29,7 @@ class Carbon_Field_Number extends Carbon_Field {
 		$field_data = array_merge($field_data, array(
 			'min' => is_numeric($this->min) ? $this->min : $this->default_min,
 			'max' => is_numeric($this->max) ? $this->max : $this->default_max,
+			'step' => is_numeric($this->step) ? $this->step : $this->default_step,
 			'truncate' => is_int($this->truncate) ? $this->truncate : $this->default_truncate,
 		));
 
@@ -80,6 +83,11 @@ class Carbon_Field_Number extends Carbon_Field {
 
 	function set_truncate($truncate) {
 		$this->truncate = $truncate;
+		return $this;
+	}
+
+	function set_step($step) {
+		$this->step = $step;
 		return $this;
 	}
 

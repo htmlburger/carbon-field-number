@@ -45,10 +45,15 @@ window.carbon = window.carbon || {};
 			var model = this.model;
 			var min = model.get('min');
 			var max = model.get('max');
+			var step = model.get('step');
 			var truncate = model.get('truncate');
 
 			if ( truncate > 0 ) {
-				_this.$('input').attr('step', 'any');
+				if ( step == 1 ) {
+					_this.$('input').attr('step', 'any');
+				} else {
+					_this.$('input').attr('step', step);
+				};
 			};
 
 			_this.$('input').attr('min', min);
@@ -70,12 +75,13 @@ window.carbon = window.carbon || {};
 			var value = $input.val();
 			var min = this.model.get('min');
 			var max = this.model.get('max');
+			var step = this.model.get('step');
 			var truncate = this.model.get('truncate');
 
 			var floatval = parseFloat(value);
 			floatval = this.truncateValue(floatval, truncate);
 
-			if ( !isNaN(floatval) && min <= floatval && floatval <= max ) {
+			if ( !isNaN(floatval) && min <= floatval && floatval <= max && floatval%step ==  ) {
 				value = floatval;
 			} else {
 				value = '';
