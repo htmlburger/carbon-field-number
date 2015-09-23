@@ -74,7 +74,13 @@ window.carbon = window.carbon || {};
 
 		stepValue: function(number, step, min, truncate) {
 			step = step || 1;
-			number = (number - min).toFixed(truncate);
+
+			// No change needed
+			if ( (number % step).toFixed(0) ) {
+				return number;
+			};
+
+			number = number - min;
 
 			var base = number/step;
 			base = this.truncateValue(base, truncate);
@@ -92,9 +98,7 @@ window.carbon = window.carbon || {};
 
 			var floatval = parseFloat(value);
 			floatval = this.truncateValue(floatval, truncate);
-			console.log(floatval);
 			floatval = this.stepValue(floatval, step, min, truncate);
-			console.log(floatval);
 
 			if ( !isNaN(floatval) && min <= floatval && floatval <= max ) {
 				value = floatval;
