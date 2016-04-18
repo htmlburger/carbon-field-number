@@ -1,6 +1,8 @@
 <?php
 
-class Carbon_Field_Number extends Carbon_Field {
+namespace Carbon_Fields\Field;
+
+class Number_Field extends Field {
 	/**
 	 * template()
 	 *

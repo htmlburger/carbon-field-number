@@ -1,7 +1,7 @@
 <?php
 /*
-Plugin Name: Carbon Field: FIELD_NAME
-Description: Extends base Carbon fields with a FIELD_NAME field. 
+Plugin Name: Carbon Field: Number
+Description: Extends base Carbon fields with a Number field. 
 Version: 1.0.0
 */
 
@@ -16,7 +16,7 @@ load_plugin_textdomain('carbon-field-number', false, dirname( plugin_basename(__
  */
 add_action('after_setup_theme', 'crb_init_carbon_field_number', 15);
 function crb_init_carbon_field_number() {
-	if ( class_exists('Carbon_Field') ) {
-		include_once dirname(__FILE__) . '/Carbon_Field_Number.php';
+	if ( class_exists( 'Carbon_Fields\\Field\\Field' ) ) {
+		include_once dirname(__FILE__) . '/Number_Field.php';
 	}
 }
