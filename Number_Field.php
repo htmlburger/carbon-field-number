@@ -66,11 +66,14 @@ class Number_Field extends Field {
 	function admin_enqueue_scripts() {
 		$template_dir = get_template_directory_uri();
 
+		// Get the current url for the carbon-fields-number, regardless of the location
+		$template_dir .= str_replace(wp_normalize_path(get_template_directory()), '', wp_normalize_path(__DIR__));
+
 		# Enqueue JS
-		crb_enqueue_script('carbon-field-Number', $template_dir . '/includes/carbon-field-number/js/field.js', array('carbon-fields'));
+		crb_enqueue_script('carbon-field-Number', $template_dir . '/js/field.js', array('carbon-fields'));
 		
 		# Enqueue CSS
-		crb_enqueue_style('carbon-field-Number', $template_dir . '/includes/carbon-field-number/css/field.css');
+		crb_enqueue_style('carbon-field-Number', $template_dir . '/css/field.css');
 	}
 
 	function set_max($max) {
