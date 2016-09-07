@@ -63,7 +63,7 @@ class Number_Field extends Field {
 		parent::save();
 	}
 
-	function admin_enqueue_scripts() {
+	static function admin_enqueue_scripts() {
 		$template_dir = get_template_directory_uri();
 
 		// Get the current url for the carbon-fields-number, regardless of the location
