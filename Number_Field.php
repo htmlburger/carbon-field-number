@@ -8,20 +8,18 @@ class Number_Field extends Field {
 	 *
 	 * Prints the main Underscore template
 	 **/
-	
+
 	protected $default_min = 1;
 	protected $default_max = 2147483647;
-	protected $default_truncate = 0;
 	protected $default_step = 1;
 
 	protected $min = 1;
 	protected $max = 2147483647;
-	protected $truncate = 0;
 	protected $step = 1;
 
 	function template() {
 		?>
-		<input id="{{{ id }}}" type="number" name="{{{ name }}}" value="{{ value }}" class="regular-text" />
+		<input id="{{{ id }}}" type="number" name="{{{ name }}}" value="{{ value }}" max="{{ max }}" min="{{ min }}" step="{{ step }}" pattern="[0-9]*" class="regular-text" />
 		<?php
 	}
 
@@ -32,7 +30,6 @@ class Number_Field extends Field {
 			'min' => is_numeric($this->min) ? $this->min : $this->default_min,
 			'max' => is_numeric($this->max) ? $this->max : $this->default_max,
 			'step' => is_numeric($this->step) ? $this->step : $this->default_step,
-			'truncate' => is_int($this->truncate) ? $this->truncate : $this->default_truncate,
 		));
 
 		return $field_data;
@@ -41,24 +38,30 @@ class Number_Field extends Field {
 	function save() {
 		$name = $this->get_name();
 		$value = $this->get_value();
+		$min = $this->min;
+		$max = $this->max;
+		$step = $this->step;
 
 		// Set the value for the field
-		$this->set_name($name);
+		$this->set_name( $name );
 
 		$field_value = '';
-		if ( isset($value) && $value !== '' && is_numeric($value) ) {
-			$value = floatval($value);
-			$value = $this->truncate($value);
+		if ( isset( $value ) && $value !== '' && is_numeric( $value ) ) {
+			$value = floatval( $value );
 
-			$is_valid_min = $this->min <= $value;
-			$is_valid_max = $value <= $this->max;
+			$is_valid_min = $min <= $value;
+			$is_valid_max = $value <= $max;
 
-			if ( $value !== '' && $is_valid_min && $is_valid_max ) {
+			// Base Formula "value = min + n * step" where "n" should be integer
+			$test_for_step_validation = ( $value - $min ) / $step;
+			$is_valid_step = $test_for_step_validation === floor( $test_for_step_validation );
+
+			if ( $value !== '' && $is_valid_min && $is_valid_max && $is_valid_step ) {
 				$field_value = $value;
 			}
 		}
 
-		$this->set_value($field_value);
+		$this->set_value( $field_value );
 
 		parent::save();
 	}
@@ -71,7 +74,7 @@ class Number_Field extends Field {
 
 		# Enqueue JS
 		crb_enqueue_script('carbon-field-Number', $template_dir . '/js/field.js', array('carbon-fields'));
-		
+
 		# Enqueue CSS
 		crb_enqueue_style('carbon-field-Number', $template_dir . '/css/field.css');
 	}
@@ -86,25 +89,8 @@ class Number_Field extends Field {
 		return $this;
 	}
 
-	function set_truncate($truncate) {
-		$this->truncate = $truncate;
-		return $this;
-	}
-
 	function set_step($step) {
 		$this->step = $step;
 		return $this;
-	}
-
-	// Helper Function, save on php 5.2
-	function truncate($number) {
-		$decimals = $this->truncate;
-
-		$power = pow(10, $decimals); 
-		if($number > 0){
-			return floor($number * $power) / $power; 
-		} else {
-			return ceil($number * $power) / $power; 
-		}
 	}
 }

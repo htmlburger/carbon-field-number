@@ -17,9 +17,26 @@ window.carbon = window.carbon || {};
 		 */
 		validate: function(attrs, options) {
 			var hasErrors = false;
+			var _this = this;
+			var min = _this.get('min');
+			var max = _this.get('max');
+			var step = _this.get('step');
+			var value = attrs.value;
 
-			if (attrs.value === '') {
-				hasErrors = true;
+			var testStepValidation = ( value - min ) / step;
+
+			if ( value === '' ) {
+				console.log('failed');
+				hasErrors = crbl10n.message_required_field;
+			} else if ( isNaN(value) ) {
+				console.log('failed');
+				hasErrors = crbl10n.message_form_validation_failed;
+			} else if ( min > value || value > max ) {
+				console.log('failed');
+				hasErrors = crbl10n.message_form_validation_failed;
+			} else if ( testStepValidation !== parseInt( testStepValidation, 10 ) ) {
+				console.log('failed');
+				hasErrors = crbl10n.message_form_validation_failed;
 			}
 
 			return hasErrors;
@@ -28,18 +45,21 @@ window.carbon = window.carbon || {};
 
 	carbon.fields.View.Number = carbon.fields.View.extend({
 		// Add the events from the parent view and also include new ones
-		events: function() {
+		/*events: function() {
 			return _.extend({}, carbon.fields.View.prototype.events, {
 				'blur input[type="number"]': 'checkValue',
 			});
-		},
+		},*/
 
+		/*
 		initialize: function() {
 			carbon.fields.View.prototype.initialize.apply(this);
 
 			this.on('field:rendered', this.initNumberField);
 		},
+		*/
 
+		/*
 		initNumberField: function() {
 			var _this = this;
 			var model = this.model;
@@ -109,6 +129,21 @@ window.carbon = window.carbon || {};
 			this.model.set('value', value);
 			$input.val(value);
 		},
+		*/
+
+
+		/*
+		 * If the field has had validation error (after form submission),
+		 * re-validate it after each value change.
+		 */
+		/*
+		revalidate: function() {
+			if (this.hadErrors) {
+				this.model.isValid();
+				this.toggleError();
+			}
+		},
+		*/
 	});
 
 }(jQuery));
