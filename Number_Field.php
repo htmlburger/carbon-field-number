@@ -23,14 +23,14 @@ class Number_Field extends Field {
 		<?php
 	}
 
-	function to_json($load) {
-		$field_data = parent::to_json($load);
+	function to_json( $load ) {
+		$field_data = parent::to_json( $load );
 
-		$field_data = array_merge($field_data, array(
-			'min' => is_numeric($this->min) ? $this->min : $this->default_min,
-			'max' => is_numeric($this->max) ? $this->max : $this->default_max,
-			'step' => is_numeric($this->step) ? $this->step : $this->default_step,
-		));
+		$field_data = array_merge( $field_data, array(
+			'min' => is_numeric( $this->min ) ? $this->min : $this->default_min,
+			'max' => is_numeric( $this->max ) ? $this->max : $this->default_max,
+			'step' => is_numeric( $this->step ) ? $this->step : $this->default_step,
+		) );
 
 		return $field_data;
 	}
@@ -70,26 +70,26 @@ class Number_Field extends Field {
 		$template_dir = get_template_directory_uri();
 
 		// Get the current url for the carbon-fields-number, regardless of the location
-		$template_dir .= str_replace(wp_normalize_path(get_template_directory()), '', wp_normalize_path(__DIR__));
+		$template_dir .= str_replace( wp_normalize_path( get_template_directory() ), '', wp_normalize_path( __DIR__ ) );
 
 		# Enqueue JS
-		crb_enqueue_script('carbon-field-Number', $template_dir . '/js/field.js', array('carbon-fields'));
+		crb_enqueue_script( 'carbon-field-Number', $template_dir . '/js/field.js', array( 'carbon-fields' ) );
 
 		# Enqueue CSS
-		crb_enqueue_style('carbon-field-Number', $template_dir . '/css/field.css');
+		crb_enqueue_style( 'carbon-field-Number', $template_dir . '/css/field.css' );
 	}
 
-	function set_max($max) {
+	function set_max( $max ) {
 		$this->max = $max;
 		return $this;
 	}
 
-	function set_min($min) {
+	function set_min( $min ) {
 		$this->min = $min;
 		return $this;
 	}
 
-	function set_step($step) {
+	function set_step( $step ) {
 		$this->step = $step;
 		return $this;
 	}
