@@ -22,7 +22,6 @@ module.exports = {
 	resolve: {
 		modules: [
 			path.resolve(root, 'assets/react'),
-			path.resolve(root, 'node_modules'),
 			path.resolve(__dirname, 'src'),
 			'node_modules'
 		]
@@ -32,7 +31,6 @@ module.exports = {
 
 	plugins: [
 		new webpack.DllReferencePlugin({
-			context: root,
 			sourceType: 'this',
 			manifest: require(path.resolve(root, 'assets/carbon.vendor.json'))
 		}),
