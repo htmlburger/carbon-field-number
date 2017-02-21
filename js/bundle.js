@@ -86,7 +86,7 @@
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+	value: true
 });
 exports.NumberField = undefined;
 
@@ -113,17 +113,35 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /**
  * Render a numeric field.
  *
- * @param  {Object}        props
- * @return {React.Element}
+ * @param  {Object}   props
+ * @param  {String}   props.name
+ * @param  {Object}   props.field
+ * @param  {Function} props.handleChange
  */
-var NumberField = exports.NumberField = function NumberField(props) {
-  console.log(props);
-  return _react2.default.createElement(
-    'p',
-    null,
-    'Number field here.'
-  );
+var NumberField = exports.NumberField = function NumberField(_ref) {
+	var name = _ref.name,
+	    field = _ref.field,
+	    handleChange = _ref.handleChange;
+
+	return _react2.default.createElement('input', {
+		type: 'number',
+		name: name,
+		id: field.id,
+		className: 'regular-text',
+		value: field.value,
+		max: field.max,
+		min: field.min,
+		step: field.step,
+		pattern: '[0-9]*',
+		onChange: handleChange });
 };
+
+/**
+ * Validate the props.
+ *
+ * @type {Object}
+ */
+
 
 /**
  * The internal dependencies.
@@ -131,7 +149,36 @@ var NumberField = exports.NumberField = function NumberField(props) {
 /**
  * The external dependencies.
  */
-exports.default = (0, _recompose.compose)((0, _withStore2.default)(), (0, _withSetup2.default)())(NumberField);
+NumberField.propTypes = {
+	name: _react.PropTypes.string.isRequired,
+	field: _react.PropTypes.shape({
+		id: _react.PropTypes.string.isRequired,
+		value: _react.PropTypes.string,
+		min: _react.PropTypes.number.isRequired,
+		max: _react.PropTypes.number.isRequired,
+		step: _react.PropTypes.number.isRequired
+	}).isRequired,
+	handleChange: _react.PropTypes.func.isRequired
+};
+
+/**
+ * Sync the input value with the store.
+ *
+ * @param  {Object}   props
+ * @param  {Object}   props.field
+ * @param  {Function} props.updateField
+ * @return {Function}
+ */
+var handleChange = function handleChange(_ref2) {
+	var field = _ref2.field,
+	    updateField = _ref2.updateField;
+	return function (_ref3) {
+		var value = _ref3.target.value;
+		return updateField(field.id, { value: value });
+	};
+};
+
+exports.default = (0, _recompose.compose)((0, _withStore2.default)(), (0, _withSetup2.default)(), (0, _recompose.withHandlers)({ handleChange: handleChange }))(NumberField);
 
 /***/ }),
 /* 3 */
