@@ -73,7 +73,7 @@ class Number_Field extends Field {
 		$template_dir .= str_replace( wp_normalize_path( get_template_directory() ), '', wp_normalize_path( __DIR__ ) );
 
 		# Enqueue JS
-		crb_enqueue_script( 'carbon-field-Number', $template_dir . '/js/field.js', array( 'carbon-fields' ) );
+		crb_enqueue_script( 'carbon-field-Number', $template_dir . '/js/bundle.js', array( 'carbon-bootstrap' ) );
 
 		# Enqueue CSS
 		crb_enqueue_style( 'carbon-field-Number', $template_dir . '/css/field.css' );
