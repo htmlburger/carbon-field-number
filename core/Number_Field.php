@@ -1,6 +1,6 @@
 <?php
 
-namespace Carbon_Fields_Number;
+namespace Carbon_Field_Number;
 
 use Carbon_Fields\Field\Field;
 

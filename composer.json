@@ -27,7 +27,7 @@
             "carbon-field-number.php"
         ],
         "psr-4": {
-            "Carbon_Fields_Number\\": "core/"
+            "Carbon_Field_Number\\": "core/"
         }
     }
 }
