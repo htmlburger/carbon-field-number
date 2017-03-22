@@ -1,44 +1,45 @@
 const path = require('path');
 const webpack = require('webpack');
-const root = path.resolve(__dirname, '../../vendor/htmlburger/carbon-fields');
+const root = path.resolve(__dirname, '../carbon-fields');
 
 module.exports = {
-	entry: './src/bootstrap.js',
-	output: {
-		path: 'js/',
-		filename: 'bundle.js',
-	},
+    context: __dirname,
+    entry: './assets/react/bootstrap.js',
+    output: {
+        path: path.resolve(__dirname, 'assets/js/'),
+        filename: 'bundle.js'
+    },
 
-	module: {
-		rules: [
-			{
-				test: /\.js$/,
-				loader: 'babel-loader?cacheDirectory=true',
-				exclude: /node_modules/
-			}
-		]
-	},
+    module: {
+        rules: [
+            {
+                test: /\.js$/,
+                loader: 'babel-loader?cacheDirectory=true',
+                exclude: /node_modules/
+            }
+        ]
+    },
 
-	resolve: {
-		modules: [
-			path.resolve(root, 'assets/react'),
-			path.resolve(__dirname, 'src'),
-			'node_modules'
-		]
-	},
+    resolve: {
+        modules: [
+            path.resolve(root, 'assets/react'),
+            path.resolve(__dirname, 'assets/react'),
+            'node_modules'
+        ]
+    },
 
-	devtool: 'cheap-module-source-map',
+    devtool: 'cheap-module-source-map',
 
-	plugins: [
-		new webpack.DllReferencePlugin({
-			sourceType: 'this',
-			manifest: require(path.resolve(root, 'assets/carbon.vendor.json'))
-		}),
+    plugins: [
+        new webpack.DllReferencePlugin({
+            sourceType: 'this',
+            manifest: require(path.resolve(root, 'assets/carbon.vendor.json'))
+        }),
 
-		new webpack.DllReferencePlugin({
-			context: root,
-			sourceType: 'this',
-			manifest: require(path.resolve(root, 'assets/carbon.core.json'))
-		})
-	],
+        new webpack.DllReferencePlugin({
+            context: root,
+            sourceType: 'this',
+            manifest: require(path.resolve(root, 'assets/carbon.core.json'))
+        })
+    ],
 };

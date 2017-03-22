@@ -2,7 +2,7 @@
  * The external dependencies.
  */
 import React, { PropTypes } from 'react';
-import { compose, withHandlers } from 'recompose';
+import { compose, withHandlers, setStatic } from 'recompose';
 
 /**
  * The internal dependencies.
@@ -12,25 +12,28 @@ import withStore from 'fields/decorators/with-store';
 import withSetup from 'fields/decorators/with-setup';
 
 /**
- * Render a numeric field.
+ * Render a text input field.
  *
  * @param  {Object}   props
  * @param  {String}   props.name
  * @param  {Object}   props.field
  * @param  {Function} props.handleChange
+ * @return {React.Element}
  */
 export const NumberField = ({ name, field, handleChange }) => {
-	return <input
-		type="number"
-		name={name}
-		id={field.id}
-		className="regular-text"
-		value={field.value}
-		max={field.max}
-		min={field.min}
-		step={field.step}
-		pattern="[0-9]*"
-		onChange={handleChange} />;
+	return <Field field={field}>
+		<input
+			type="number"
+			id={field.id}
+			name={name}
+			value={field.value}
+			disabled={!field.ui.is_visible}
+			className="regular-text"
+			max={field.max}
+			min={field.min}
+			step={field.step}
+			onChange={handleChange} />
+	</Field>;
 }
 
 /**
@@ -43,9 +46,9 @@ NumberField.propTypes = {
 	field: PropTypes.shape({
 		id: PropTypes.string.isRequired,
 		value: PropTypes.string,
-		min: PropTypes.number.isRequired,
-		max: PropTypes.number.isRequired,
-		step: PropTypes.number.isRequired,
+		min: PropTypes.number,
+		max: PropTypes.number,
+		step: PropTypes.number,
 	}).isRequired,
 	handleChange: PropTypes.func.isRequired,
 };
@@ -60,8 +63,10 @@ NumberField.propTypes = {
  */
 const handleChange = ({ field, updateField }) => ({ target: { value } }) => updateField(field.id, { value });
 
-export default compose(
-	withStore(),
-	withSetup(),
-	withHandlers({ handleChange })
-)(NumberField);
+export default setStatic('type', ['number'])(
+	compose(
+		withStore(),
+		withSetup(),
+		withHandlers({ handleChange })
+	)(NumberField)
+);

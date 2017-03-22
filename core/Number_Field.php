@@ -69,13 +69,31 @@ class Number_Field extends Field {
 		$template_dir = get_template_directory_uri();
 
 		// Get the current url for the carbon-fields-number, regardless of the location
-		$template_dir .= str_replace( wp_normalize_path( get_template_directory() ), '', wp_normalize_path( __DIR__ ) );
+		$template_dir .= str_replace( wp_normalize_path( get_template_directory() ), '', wp_normalize_path( \Carbon_Field_Number\DIR ) );
 
 		# Enqueue JS
-		crb_enqueue_script( 'carbon-field-Number', $template_dir . '/js/bundle.js', array( 'carbon-bootstrap' ) );
+		crb_enqueue_script( 'carbon-field-number', $template_dir . '/assets/js/bundle.js', array( 'carbon-fields-bootstrap' ) );
 
 		# Enqueue CSS
-		crb_enqueue_style( 'carbon-field-Number', $template_dir . '/css/field.css' );
+		crb_enqueue_style( 'carbon-field-number', $template_dir . '/assets/css/field.css' );
+	}
+
+	/**
+	 * Returns an array that holds the field data, suitable for JSON representation.
+	 *
+	 * @param bool $load  Should the value be loaded from the database or use the value from the current instance.
+	 * @return array
+	 */
+	public function to_json( $load ) {
+		$field_data = parent::to_json( $load );
+
+		$field_data = array_merge( $field_data, array(
+			'min' => $this->min,
+			'max' => $this->max,
+			'step' => $this->step,
+		) );
+
+		return $field_data;
 	}
 
 	/**

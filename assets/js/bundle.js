@@ -1,41 +1,41 @@
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
-
+/******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
-
+/******/
 /******/ 		// Check if module is in cache
 /******/ 		if(installedModules[moduleId])
 /******/ 			return installedModules[moduleId].exports;
-
+/******/
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			i: moduleId,
 /******/ 			l: false,
 /******/ 			exports: {}
 /******/ 		};
-
+/******/
 /******/ 		// Execute the module function
 /******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-
+/******/
 /******/ 		// Flag the module as loaded
 /******/ 		module.l = true;
-
+/******/
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-
-
+/******/
+/******/
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
-
+/******/
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
-
+/******/
 /******/ 	// identity function for calling harmony imports with the correct context
 /******/ 	__webpack_require__.i = function(value) { return value; };
-
+/******/
 /******/ 	// define getter function for harmony exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
 /******/ 		if(!__webpack_require__.o(exports, name)) {
@@ -46,7 +46,7 @@
 /******/ 			});
 /******/ 		}
 /******/ 	};
-
+/******/
 /******/ 	// getDefaultExport function for compatibility with non-harmony modules
 /******/ 	__webpack_require__.n = function(module) {
 /******/ 		var getter = module && module.__esModule ?
@@ -55,13 +55,13 @@
 /******/ 		__webpack_require__.d(getter, 'a', getter);
 /******/ 		return getter;
 /******/ 	};
-
+/******/
 /******/ 	// Object.prototype.hasOwnProperty.call
 /******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-
+/******/
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
-
+/******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(__webpack_require__.s = 9);
 /******/ })
@@ -111,29 +111,34 @@ var _withSetup2 = _interopRequireDefault(_withSetup);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
- * Render a numeric field.
+ * Render a text input field.
  *
  * @param  {Object}   props
  * @param  {String}   props.name
  * @param  {Object}   props.field
  * @param  {Function} props.handleChange
+ * @return {React.Element}
  */
 var NumberField = exports.NumberField = function NumberField(_ref) {
 	var name = _ref.name,
 	    field = _ref.field,
 	    handleChange = _ref.handleChange;
 
-	return _react2.default.createElement('input', {
-		type: 'number',
-		name: name,
-		id: field.id,
-		className: 'regular-text',
-		value: field.value,
-		max: field.max,
-		min: field.min,
-		step: field.step,
-		pattern: '[0-9]*',
-		onChange: handleChange });
+	return _react2.default.createElement(
+		_field2.default,
+		{ field: field },
+		_react2.default.createElement('input', {
+			type: 'number',
+			id: field.id,
+			name: name,
+			value: field.value,
+			disabled: !field.ui.is_visible,
+			className: 'regular-text',
+			max: field.max,
+			min: field.min,
+			step: field.step,
+			onChange: handleChange })
+	);
 };
 
 /**
@@ -154,9 +159,9 @@ NumberField.propTypes = {
 	field: _react.PropTypes.shape({
 		id: _react.PropTypes.string.isRequired,
 		value: _react.PropTypes.string,
-		min: _react.PropTypes.number.isRequired,
-		max: _react.PropTypes.number.isRequired,
-		step: _react.PropTypes.number.isRequired
+		min: _react.PropTypes.number,
+		max: _react.PropTypes.number,
+		step: _react.PropTypes.number
 	}).isRequired,
 	handleChange: _react.PropTypes.func.isRequired
 };
@@ -178,7 +183,7 @@ var handleChange = function handleChange(_ref2) {
 	};
 };
 
-exports.default = (0, _recompose.compose)((0, _withStore2.default)(), (0, _withSetup2.default)(), (0, _recompose.withHandlers)({ handleChange: handleChange }))(NumberField);
+exports.default = (0, _recompose.setStatic)('type', ['number'])((0, _recompose.compose)((0, _withStore2.default)(), (0, _withSetup2.default)(), (0, _recompose.withHandlers)({ handleChange: handleChange }))(NumberField));
 
 /***/ }),
 /* 3 */
@@ -196,25 +201,25 @@ module.exports = (__webpack_require__(1))(2);
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = (__webpack_require__(1))(322);
+module.exports = (__webpack_require__(1))(325);
 
 /***/ }),
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = (__webpack_require__(0))(4);
+module.exports = (__webpack_require__(0))(5);
 
 /***/ }),
 /* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = (__webpack_require__(0))(5);
+module.exports = (__webpack_require__(0))(6);
 
 /***/ }),
 /* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = (__webpack_require__(0))(6);
+module.exports = (__webpack_require__(0))(8);
 
 /***/ }),
 /* 9 */
@@ -234,7 +239,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /**
  * The internal dependencies.
  */
-(0, _registry.registerFieldComponent)('Number', _field2.default);
+(0, _registry.registerFieldComponent)('number', _field2.default);
 
 /***/ })
 /******/ ]);
