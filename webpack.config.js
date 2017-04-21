@@ -22,7 +22,7 @@ module.exports = {
 
     resolve: {
         modules: [
-            path.resolve(root, 'assets/react'),
+            path.resolve(root, 'assets/js'),
             path.resolve(__dirname, 'assets/react'),
             'node_modules'
         ]
@@ -33,13 +33,13 @@ module.exports = {
     plugins: [
         new webpack.DllReferencePlugin({
             sourceType: 'this',
-            manifest: require(path.resolve(root, 'assets/carbon.vendor.json'))
+            manifest: require(path.resolve(root, 'assets/dist/carbon.vendor.json'))
         }),
 
         new webpack.DllReferencePlugin({
             context: root,
             sourceType: 'this',
-            manifest: require(path.resolve(root, 'assets/carbon.core.json'))
+            manifest: require(path.resolve(root, 'assets/dist/carbon.core.json'))
         })
     ],
 };
