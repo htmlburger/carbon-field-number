@@ -8,21 +8,21 @@ class Number_Field extends Field {
 
 	/**
 	 * Minimum value
-	 * 
+	 *
 	 * @var null|float
 	 */
 	protected $min = null;
 
 	/**
 	 * Maximum value
-	 * 
+	 *
 	 * @var null|float
 	 */
 	protected $max = null;
 
 	/**
 	 * Step/interval between allowed values
-	 * 
+	 *
 	 * @var null|float
 	 */
 	protected $step = null;
@@ -34,14 +34,14 @@ class Number_Field extends Field {
 	 */
 	public function set_value_from_input( $input ) {
 		parent::set_value_from_input( $input );
-		
+
 		$value = $this->get_value();
 		if ( $value === '' ) {
 			return;
 		}
 
 		$value = floatval( $value );
-		
+
 		if ( $this->min !== null ) {
 			$value = max( $value, $this->min );
 		}
@@ -98,7 +98,7 @@ class Number_Field extends Field {
 
 	/**
 	 * Set field minimum value. Default: null
-	 * 
+	 *
 	 * @param null|float $min
 	 * @return Field $this
 	 */
@@ -109,7 +109,7 @@ class Number_Field extends Field {
 
 	/**
 	 * Set field maximum value. Default: null
-	 * 
+	 *
 	 * @param null|float $max
 	 * @return Field $this
 	 */
@@ -120,7 +120,7 @@ class Number_Field extends Field {
 
 	/**
 	 * Set field step value. Default: null
-	 * 
+	 *
 	 * @param null|float $step
 	 * @return Field $this
 	 */

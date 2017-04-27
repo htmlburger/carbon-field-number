@@ -1,7 +1,8 @@
 /**
  * The external dependencies.
  */
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { compose, withHandlers, setStatic } from 'recompose';
 
 /**
@@ -12,15 +13,19 @@ import withStore from 'fields/decorators/with-store';
 import withSetup from 'fields/decorators/with-setup';
 
 /**
- * Render a text input field.
+ * Render a number input field.
  *
- * @param  {Object}   props
- * @param  {String}   props.name
- * @param  {Object}   props.field
- * @param  {Function} props.handleChange
+ * @param  {Object}        props
+ * @param  {String}        props.name
+ * @param  {Object}        props.field
+ * @param  {Function}      props.handleChange
  * @return {React.Element}
  */
-export const NumberField = ({ name, field, handleChange }) => {
+export const NumberField = ({
+	name,
+	field,
+	handleChange
+}) => {
 	return <Field field={field}>
 		<input
 			type="number"
@@ -42,31 +47,42 @@ export const NumberField = ({ name, field, handleChange }) => {
  * @type {Object}
  */
 NumberField.propTypes = {
-	name: PropTypes.string.isRequired,
+	name: PropTypes.string,
 	field: PropTypes.shape({
-		id: PropTypes.string.isRequired,
+		id: PropTypes.string,
 		value: PropTypes.string,
 		min: PropTypes.number,
 		max: PropTypes.number,
 		step: PropTypes.number,
-	}).isRequired,
-	handleChange: PropTypes.func.isRequired,
+	}),
+	handleChange: PropTypes.func,
 };
 
 /**
- * Sync the input value with the store.
+ * The enhancer.
  *
- * @param  {Object}   props
- * @param  {Object}   props.field
- * @param  {Function} props.updateField
- * @return {Function}
+ * @type {Function}
  */
-const handleChange = ({ field, updateField }) => ({ target: { value } }) => updateField(field.id, { value });
+export const enhance = compose(
+	/**
+	 * Connect to the Redux store.
+	 */
+	withStore(),
 
-export default setStatic('type', ['number'])(
-	compose(
-		withStore(),
-		withSetup(),
-		withHandlers({ handleChange })
-	)(NumberField)
+	/**
+	 * Attach the setup hooks.
+	 */
+	withSetup(),
+
+	/**
+	 * The handlers passed to the component.
+	 */
+	withHandlers({
+		handleChange: ({ field, updateField }) => ({ target: { value } }) => updateField(field.id, { value }),
+	})
 );
+
+export default setStatic('type', [
+	'number',
+])(enhance(NumberField));
+

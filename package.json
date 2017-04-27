@@ -2,7 +2,8 @@
   "name": "carbon-field-number",
   "version": "1.0.0",
   "scripts": {
-    "dev": "webpack"
+    "dev": "webpack -w",
+    "build": "webpack"
   },
   "license": "MIT",
   "devDependencies": {
@@ -17,15 +18,17 @@
     "classnames": "^2.2.5",
     "lodash": "^4.17.4",
     "object-path-immutable": "^0.5.1",
-    "react": "^15.4.2",
-    "react-color": "^2.11.1",
-    "react-dom": "^15.4.2",
-    "react-onclickoutside": "^5.8.4",
-    "react-redux": "^5.0.2",
-    "recompose": "^0.22.0",
+    "prop-types": "^15.5.6",
+    "react": "^15.5.3",
+    "react-color": "^2.11.7",
+    "react-dom": "^15.5.3",
+    "react-flatpickr": "^3.3.0",
+    "react-onclickoutside": "^5.11.1",
+    "react-redux": "^5.0.4",
+    "recompose": "^0.23.1",
     "redux": "^3.6.0",
-    "redux-actions": "^1.2.1",
-    "redux-saga": "^0.14.3",
-    "reselect": "^2.5.4"
+    "redux-actions": "^2.0.1",
+    "redux-saga": "^0.14.6",
+    "reselect": "^3.0.0"
   }
 }
