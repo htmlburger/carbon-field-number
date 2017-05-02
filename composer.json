@@ -21,7 +21,9 @@
             "role": "Developer"
         }
     ],
-    "require": {},
+    "require": {
+        "htmlburger/carbon-fields": "^2.0"
+    },
     "autoload": {
         "files": [
             "carbon-field-number.php"
