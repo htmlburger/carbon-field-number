@@ -28,6 +28,34 @@ class Number_Field extends Field {
 	protected $step = null;
 
 	/**
+	 * Prepare the field type for use
+	 * Called once per field type when activated
+	 */
+	public static function field_type_activated() {
+		$dir = \Carbon_Field_Number\DIR . '/languages/';
+		$locale = get_locale();
+		$path = $dir . $locale . '.mo';
+		load_textdomain( 'carbon-field-number', $path );
+	}
+
+	/**
+	 * Enqueue scripts and styles in admin
+	 * Called once per field type
+	 */
+	public static function admin_enqueue_scripts() {
+		$template_dir = get_template_directory_uri();
+
+		// Get the current url for the carbon-fields-number, regardless of the location
+		$template_dir .= str_replace( wp_normalize_path( get_template_directory() ), '', wp_normalize_path( \Carbon_Field_Number\DIR ) );
+
+		# Enqueue JS
+		wp_enqueue_script( 'carbon-field-number', $template_dir . '/assets/js/bundle.js', array( 'carbon-fields-boot' ) );
+
+		# Enqueue CSS
+		wp_enqueue_style( 'carbon-field-number', $template_dir . '/assets/css/field.css' );
+	}
+
+	/**
 	 * Load the field value from an input array based on it's name
 	 *
 	 * @param array $input Array of field names and values.
@@ -59,23 +87,6 @@ class Number_Field extends Field {
 		}
 
 		$this->set_value( $value );
-	}
-
-	/**
-	 * Enqueue admin scripts.
-	 * Called once per field type.
-	 */
-	static function admin_enqueue_scripts() {
-		$template_dir = get_template_directory_uri();
-
-		// Get the current url for the carbon-fields-number, regardless of the location
-		$template_dir .= str_replace( wp_normalize_path( get_template_directory() ), '', wp_normalize_path( \Carbon_Field_Number\DIR ) );
-
-		# Enqueue JS
-		wp_enqueue_script( 'carbon-field-number', $template_dir . '/assets/js/bundle.js', array( 'carbon-fields-boot' ) );
-
-		# Enqueue CSS
-		wp_enqueue_style( 'carbon-field-number', $template_dir . '/assets/css/field.css' );
 	}
 
 	/**
