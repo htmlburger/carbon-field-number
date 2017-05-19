@@ -43,16 +43,13 @@ class Number_Field extends Field {
 	 * Called once per field type
 	 */
 	public static function admin_enqueue_scripts() {
-		$template_dir = get_template_directory_uri();
-
-		// Get the current url for the carbon-fields-number, regardless of the location
-		$template_dir .= str_replace( wp_normalize_path( get_template_directory() ), '', wp_normalize_path( \Carbon_Field_Number\DIR ) );
+		$root_uri = \Carbon_Fields\Carbon_Fields::directory_to_url( \Carbon_Field_Number\DIR );
 
 		# Enqueue JS
-		wp_enqueue_script( 'carbon-field-number', $template_dir . '/assets/js/bundle.js', array( 'carbon-fields-boot' ) );
+		wp_enqueue_script( 'carbon-field-number', $root_uri . '/assets/js/bundle.js', array( 'carbon-fields-boot' ) );
 
 		# Enqueue CSS
-		wp_enqueue_style( 'carbon-field-number', $template_dir . '/assets/css/field.css' );
+		wp_enqueue_style( 'carbon-field-number', $root_uri . '/assets/css/field.css' );
 	}
 
 	/**
