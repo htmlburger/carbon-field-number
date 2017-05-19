@@ -50,13 +50,13 @@ module.exports = {
 
         new webpack.DllReferencePlugin({
             sourceType: 'this',
-            manifest: require(path.resolve(root, 'assets/dist/carbon.vendor.min.json')),
+            manifest: require(path.resolve(root, 'assets/dist/carbon.vendor.json')),
         }),
 
         new webpack.DllReferencePlugin({
             context: root,
             sourceType: 'this',
-            manifest: require(path.resolve(root, 'assets/dist/carbon.core.min.json'))
+            manifest: require(path.resolve(root, 'assets/dist/carbon.core.json'))
         })
     ],
 
