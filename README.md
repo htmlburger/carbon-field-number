@@ -1,3 +1,6 @@
 # Carbon Field: Number
 
-This field is under active development and meant for the 2.0 release of Carbon Fields.
+Adds a `number` field type to Carbon Fields. Install using composer:
+```cli
+composer require htmlburger/carbon-field-number
+```
