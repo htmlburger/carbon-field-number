@@ -53,7 +53,7 @@ class Number_Field extends Field {
 	}
 
 	/**
-	 * Load the field value from an input array based on it's name
+	 * Load the field value from an input array based on its name
 	 *
 	 * @param array $input Array of field names and values.
 	 */
@@ -107,8 +107,8 @@ class Number_Field extends Field {
 	/**
 	 * Set field minimum value. Default: null
 	 *
-	 * @param null|float $min
-	 * @return Field $this
+	 * @param  null|float $min
+	 * @return self       $this
 	 */
 	function set_min( $min ) {
 		$this->min = floatval( $min );
@@ -118,8 +118,8 @@ class Number_Field extends Field {
 	/**
 	 * Set field maximum value. Default: null
 	 *
-	 * @param null|float $max
-	 * @return Field $this
+	 * @param  null|float $max
+	 * @return self       $this
 	 */
 	function set_max( $max ) {
 		$this->max = floatval( $max );
@@ -129,8 +129,8 @@ class Number_Field extends Field {
 	/**
 	 * Set field step value. Default: null
 	 *
-	 * @param null|float $step
-	 * @return Field $this
+	 * @param  null|float $step
+	 * @return self       $this
 	 */
 	function set_step( $step ) {
 		$this->step = floatval( $step );
