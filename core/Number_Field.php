@@ -77,7 +77,7 @@ class Number_Field extends Field {
 
 		if ( $this->step !== null ) {
 			$step_base = ( $this->min !== null ) ? $this->min : 0;
-			$is_valid_step_value = ( $value - $step_base ) % $this->step === 0;
+			$is_valid_step_value = fmod( ( $value - $step_base ), $this->step ) === 0;
 			if ( ! $is_valid_step_value ) {
 				$value = $step_base; // value is not valid - reset it to a base value
 			}
