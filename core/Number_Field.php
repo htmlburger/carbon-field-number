@@ -77,13 +77,11 @@ class Number_Field extends Field {
 
 		if ( $this->step !== null ) {
 			$min = ( $this->min !== null ) ? $this->min : 0;
+
 			// Base Formula "value = min + n * step" where "n" should be integer
 			$test_for_step_validation = ( $value - $min ) / $this->step;
 
-			$test_for_step_validation_floored = floor( $test_for_step_validation );
-
-			// bccom is required when comparing two floating numbers, since the regular "==" fails here
-			$is_valid_step = bccomp( $test_for_step_validation, $test_for_step_validation_floored ) === 0;
+			$is_valid_step = strpos( strval( $test_for_step_validation ), '.' ) === false;
 
 			if ( ! $is_valid_step ) {
 				$value = $min; // value is not valid - reset it to a base value
