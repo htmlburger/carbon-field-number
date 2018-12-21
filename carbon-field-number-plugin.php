@@ -7,8 +7,8 @@
  * Author URI: https://htmlburger.com/
  * Plugin URI: http://carbonfields.net/
  * License: GPL2
- * Requires at least: 5.3
- * Tested up to: 7.2.8
+ * Requires at least: 4.0
+ * Tested up to: 5.0.2
  * Text Domain: carbon-field-number
  * Domain Path: /languages
  */

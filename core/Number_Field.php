@@ -46,7 +46,10 @@ class Number_Field extends Field {
 		$root_uri = \Carbon_Fields\Carbon_Fields::directory_to_url( \Carbon_Field_Number\DIR );
 
 		// Enqueue field styles.
-		wp_enqueue_style( 'carbon-field-number', $root_uri . '/build/bundle.css' );
+		wp_enqueue_style(
+			'carbon-field-number',
+			$root_uri . '/build/bundle' . ( ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min' ) . '.css'
+		);
 
 		// Enqueue field scripts.
 		wp_enqueue_script(

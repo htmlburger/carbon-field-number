@@ -36,15 +36,14 @@ class NumberField extends Component {
 				id={id}
 				name={name}
 				value={value}
-				className="regular-text"
 				max={field.max}
 				min={field.min}
 				step={field.step}
-				onChange={this.handleChange} />
+				className="cf-number__input"
+				onChange={this.handleChange}
+			/>
 		);
 	}
 }
 
 export default NumberField;
-
-
