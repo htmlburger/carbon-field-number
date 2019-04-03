@@ -83,10 +83,15 @@ class Number_Field extends Field {
 		}
 
 		if ( $this->step !== null ) {
-			$step_base = ( $this->min !== null ) ? $this->min : 0;
-			$is_valid_step_value = ( $value - $step_base ) % $this->step === 0;
-			if ( ! $is_valid_step_value ) {
-				$value = $step_base; // value is not valid - reset it to a base value
+			$min = ( $this->min !== null ) ? $this->min : 0;
+
+			// Base Formula "value = min + n * step" where "n" should be integer
+			$test_for_step_validation = ( $value - $min ) / $this->step;
+
+			$is_valid_step = strpos( strval( $test_for_step_validation ), '.' ) === false;
+
+			if ( ! $is_valid_step ) {
+				$value = $min; // value is not valid - reset it to a base value
 			}
 		}
 
